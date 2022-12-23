@@ -1,0 +1,44 @@
+/*Qeury 1*/
+SELECT g.GenreId, g.Name, COUNT(DISTINCT c.CustomerId) AS no_customers
+FROM Customer c
+JOIN Invoice i
+ON c.CustomerId = i.CustomerId
+JOIN InvoiceLine il
+ON i.InvoiceId = il.InvoiceId
+JOIN Track t
+ON il.TrackId = t.TrackId
+JOIN Genre g
+ON t.GenreId = g.GenreId
+GROUP BY 1,2
+Order by 3 DESC
+LIMIT 10;
+
+/*Qeury 2*/
+SELECT m.name, COUNT(DISTINCT ar.ArtistId)
+FROM MediaType m
+JOIN Track t
+ON m.MediaTypeId = t.MediaTypeId
+JOIN Album al
+ON t.AlbumId = al.AlbumId
+JOIN Artist ar
+ON al.ArtistId = ar.ArtistId
+GROUP BY 1
+ORDER BY 2 DESC;
+
+/*Qeury 3*/
+SELECT p.Name, COUNT(t.TrackId) AS no_tracks 
+FROM Track t
+JOIN PlaylistTrack pt
+ON t.TrackId = pt.TrackId
+JOIN Playlist p
+ON pt.PlaylistId = p.PlaylistId
+GROUP BY 1
+order by 2 DESC;
+
+/*Qeury 4*/
+SELECT e.lastname || " " || e.firstname AS Full_Name, COUNT(c.SupportRepId)
+FROM Employee e
+JOIN Customer c
+ON e.EmployeeId = c.SupportRepId
+GROUP BY 1
+ORDER BY 2 DESC;
